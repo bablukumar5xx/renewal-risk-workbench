@@ -11,7 +11,7 @@ speaking the **Say** lines.
 Before recording:
 
 ```bash
-cd customer-health-platform   # or the directory you unpacked
+cd renewal-risk-workbench   # or the directory you unpacked
 .venv/bin/python scripts/bootstrap.py --fresh   # only if data/artifacts are absent
 CHP_SCHEDULER=0 .venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
