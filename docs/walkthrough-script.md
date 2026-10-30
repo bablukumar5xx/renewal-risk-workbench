@@ -46,8 +46,9 @@ coverage, approvals waiting. Scroll the top of the queue.
 **Say:**
 > The brief is computed from the latest successful run, not typed into a slide.
 > The queue is ranked by calibrated probability times ARR, capped to the CSMs'
-> capacity. A red account with no data is not painted red: it is marked low
-> confidence and kept out of outreach until coverage clears the tenant minimum.
+> capacity. A red account with no data carries a low-confidence badge; below
+> the tenant's coverage floor it is hard-blocked from email. The score is still
+> visible; it just is not allowed to trigger outreach.
 > The number at risk is the sum of expected ARR at risk for red and yellow
 > accounts inside the 330-day horizon. Every one of those numbers is a sum over
 > `scores` rows.
@@ -113,7 +114,7 @@ unmatched rate, timezone assumptions, four-source coverage.
 > held back and picked up by the next run, not backfilled into the past.
 >
 > The pipeline screen is the honest view of the data: 287,000 raw events became
-> 272,000 facts, with duplicates and unmatched records counted rather than
+> 274,000 facts, with duplicates and unmatched records counted rather than
 > hidden.
 
 ## 5:00 — Model health (45s)

@@ -23,7 +23,7 @@ A **renewal-risk workbench** with four parts:
 
 **1. "If an account goes red, email them" — no.** A risk score is a *model output about us*, not a message to the customer. Auto-emailing a red account tells a customer we think they are leaving, at the moment they are most fragile. It also leaks churn modelling to the account, creates legal exposure (consent, CAN-SPAM/GDPR), and has no theory of change: a generic "we noticed you're unhappy" email is a false-positive generator. I would automate the *internal* response, and gate customer-facing comms behind a human with a one-click draft.
 
-**2. "Red / yellow / green" hides the two things that matter** — *how sure are we* and *how much is at stake*. I keep the colour as a glanceable summary but the queue sorts on expected ARR at risk, and every row carries a separate confidence badge; accounts with thin data are marked low-confidence and kept out of outreach rather than painted red on no evidence.
+**2. "Red / yellow / green" hides the two things that matter** — *how sure are we* and *how much is at stake*. I keep the colour as a glanceable summary but the queue sorts on expected ARR at risk, and every row carries a separate confidence badge; accounts below the tenant's coverage floor are hard-blocked from outreach rather than treated as confirmed red on no evidence.
 
 **3. "Nothing slips" is the wrong success metric.** Scores always fire. The metric is **% of at-risk ARR surfaced ≥ 90 days before renewal with an action taken**, plus a guardrail on false-positive outreach. Otherwise we optimise for alarm volume.
 
