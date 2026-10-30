@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Generated at bootstrap / runtime. Rebuild with scripts/bootstrap.py --fresh.
+data/
+artifacts/
+
+# OS noise
+.DS_Store

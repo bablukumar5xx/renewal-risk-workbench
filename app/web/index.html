@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Renewal Risk Workbench</title>
+  <link rel="stylesheet" href="/static/styles.css?v=9"/>
+</head>
+<body>
+  <div id="login" class="login hidden">
+    <div class="login-card">
+      <div class="brand-mark">RR</div>
+      <h1>Renewal Risk Workbench</h1>
+      <p class="muted">Choose a customer workspace. Each workspace is a separate tenant — its data,
+        model and actions are isolated.</p>
+      <div id="tenant-cards" class="tenant-cards"></div>
+      <p class="tiny muted">Demo build. In production this screen is replaced by SSO and a tenant claim.</p>
+    </div>
+  </div>
+
+  <div id="app" class="app hidden">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark small">RR</div>
+        <div>
+          <div class="brand-title">Renewal Risk</div>
+          <div class="brand-sub" id="tenant-name">—</div>
+        </div>
+      </div>
+      <nav class="topnav" id="topnav">
+        <a href="#/queue" data-nav="queue">Queue</a>
+        <a href="#/actions" data-nav="actions">Actions <span class="pill" id="nav-actions"></span></a>
+        <a href="#/model" data-nav="model">Model</a>
+        <a href="#/pipeline" data-nav="pipeline">Pipeline</a>
+        <a href="#/runs" data-nav="runs">Runs</a>
+      </nav>
+      <div class="top-actions">
+        <span class="asof" id="as-of">—</span>
+        <button class="btn ghost" id="kill-btn" title="Stop all outbound automation for this tenant">Kill switch</button>
+        <button class="btn primary" id="run-btn">Run agent</button>
+        <button class="btn ghost" id="switch-btn" title="Switch workspace">Switch</button>
+      </div>
+    </header>
+
+    <main id="view" class="view"></main>
+    <div id="drawer" class="drawer hidden"></div>
+    <div id="modal" class="modal hidden"></div>
+    <div id="toast" class="toast hidden"></div>
+  </div>
+
+  <script src="/static/app.js?v=9"></script>
+</body>
+</html>

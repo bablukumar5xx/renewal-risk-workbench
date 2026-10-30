@@ -1,0 +1,14 @@
+# Runtime (installed in .venv; Python 3.9)
+fastapi==0.128.8
+uvicorn==0.39.0
+pandas==2.2.3
+numpy==2.0.2
+scikit-learn==1.6.1
+joblib==1.5.3
+
+# Deliverable tooling
+python-pptx==1.0.2
+
+# Tests
+pytest==8.4.2
+httpx==0.28.1
