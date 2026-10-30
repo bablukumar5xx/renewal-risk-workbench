@@ -318,10 +318,9 @@ The full list, with rejected alternatives, is in
   drift is reported, not acted on.
 - No ESP webhooks, bounce/complaint processing, or SMS. SMTP transport is
   available but not configured in the demo; no CRM write-back and no SSO.
-- No live desktop capture. The environment cannot record a screen; the
-  [narrated walkthrough](docs/walkthrough.mp4) is assembled from the live
-  screenshots and the recording script, and the script remains the source for a
-  human one-take recording.
+- No live screen recording. The [narrated walkthrough](docs/walkthrough.mp4) is
+  a 4-minute slideshow assembled from the live screenshots, deck, and script;
+  the script remains the source for a one-take recording.
 
 ## What breaks first at 10×
 

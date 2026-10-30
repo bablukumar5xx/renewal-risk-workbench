@@ -160,7 +160,6 @@ prose is commodity.
 - **No ESP integration beyond SMTP.** Sends default to a side-effect-free
   simulated outbox; `CHP_EMAIL_TRANSPORT=smtp` delivers through a relay, but
   there is no bounce/complaint webhook or provider-side unsubscribe handling.
-- **No live desktop capture.** The environment cannot record a screen. The
-  committed walkthrough MP4 is assembled from the live screenshots, the deck,
-  and macOS text-to-speech; the script remains the source for a human one-take
-  recording.
+- **No live screen recording.** The committed walkthrough MP4 is a narrated
+  slideshow assembled from the live screenshots, the deck, and macOS
+  text-to-speech; the script remains the source for a one-take recording.

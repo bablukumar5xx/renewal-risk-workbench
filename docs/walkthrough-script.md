@@ -3,10 +3,9 @@
 A generated 4-minute narration is committed at
 [`walkthrough.mp4`](walkthrough.mp4); rebuild it with
 `scripts/make_walkthrough.py`. The script below is the source for that
-narration and for a human one-take recording. The environment cannot capture a
-live desktop, so a manual recording is optional: use 1440×900 or larger, with
-the app running at `http://127.0.0.1:8000`, and do the **Do** lines while
-speaking the **Say** lines.
+narration and for a live one-take recording. For a manual recording, use
+1440×900 or larger, with the app running at `http://127.0.0.1:8000`, and do
+the **Do** lines while speaking the **Say** lines.
 
 Before recording:
 
