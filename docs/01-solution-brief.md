@@ -48,6 +48,6 @@ Then: approval-gated drafts and the scheduled agent (weeks 4–5), then the tran
 
 Temporal holdout (train through Sep 2025, calibrate to Mar 2026, test from Mar 2026): ROC-AUC and PR-AUC vs a usage-trend baseline, Brier score and a reliability curve, **precision of the top-100 ARR-at-risk queue**, and a backtest of realised churn recall by band. Plus invariant tests: point-in-time correctness (late-arriving events must not leak), tenant isolation, idempotent agent runs, and guardrail enforcement.
 
-## What breaks first at 10× (600k accounts / 20M events)
+## What breaks first at 10× (50k accounts / 3.1M events)
 
 Nightly full recompute in SQLite, then per-account occlusion explanations. The fix is incremental feature aggregates (event-time stream + materialised windows), a columnar store, and batch/vectorised explanations — plus queue partitioning by CSM pod. Named in the README with the tradeoff.

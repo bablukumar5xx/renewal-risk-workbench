@@ -360,10 +360,10 @@ def build() -> Path:
         "The playbook, owners, SLAs, and a capacity number.",
         "Acted / renewed feedback, or the model cannot be retrained honestly.",
     ], size=13.5, color=RGBColor(0xE6, 0xE2, 0xD8), bullet_color=ORANGE, gap=7)
-    _text(s, 7.0, 2.25, 5.4, 0.35, "AT 10× (600K ACCOUNTS / 20M EVENTS)", size=11, color=TEAL, bold=True)
+    _text(s, 7.0, 2.25, 5.4, 0.35, "AT 10× (50K ACCOUNTS / 3.1M EVENTS)", size=11, color=TEAL, bold=True)
     _bullets(s, 7.0, 2.7, 5.4, 3.8, [
-        "1. SQLite nightly full recompute.",
-        "2. Per-account occlusion explanations.",
+        "1. SQLite nightly full recompute (~20 min).",
+        "2. Per-account occlusion explanations (1.6M model calls).",
         "3. Queue partitioning by CSM pod.",
         "Fix: incremental aggregates, columnar store, batched explanations.",
         "Do not start by buying a bigger laptop.",

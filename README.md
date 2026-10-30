@@ -309,14 +309,15 @@ The full list, with rejected alternatives, is in
 
 ## What breaks first at 10×
 
-Target: 600k accounts, 20M events, ~50 CSMs.
+Target: 50,000 accounts, ~3.1M raw events, same CSM headcount (10× the demo).
 
 1. **SQLite nightly full recompute.** The score step is already ~120s for 3,700
-   active accounts because explanations are per-feature. At 600k accounts this
-   is hours, and WAL write contention with the API becomes visible.
-2. **Per-account occlusion explanations.** 44 model calls per account. The fix
-   is batch/vectorised attribution (or SHAP on a sample plus cache), not a
-   bigger box.
+   active accounts because explanations are per-feature. At 10× this is roughly
+   20 minutes of single-process CPU, and WAL write contention with the API
+   becomes visible.
+2. **Per-account occlusion explanations.** 44 model calls per account, so 10×
+   the book is ~1.6M extra model calls per night. The fix is batch/vectorised
+   attribution (or SHAP on a sample plus cache), not a bigger box.
 3. **Queue aggregation without partitioning.** `SUM(expected_arr_at_risk)` over
    the whole book on every page load. Partition by CSM pod and pre-aggregate
    the digest per run.
