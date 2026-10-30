@@ -365,7 +365,8 @@ def build_digest(conn, tenant_id: str, run_id: str | None = None) -> dict:
             "expected_arr_at_risk_cents": s["expected_arr_at_risk_cents"],
             "coverage": round(s["coverage"], 2), "confidence": s["confidence"],
             "days_to_renewal": s["days_to_renewal"],
-            "top_reason": reasons[0]["label"] if reasons else None,
+            "top_reason": next((r["label"] for r in reasons if not r.get("imputed")),
+                               reasons[0]["label"] if reasons else None),
             "in_horizon": unj(s["reason_json"], {}).get("in_horizon", True),
         })
     total = sum(s["expected_arr_at_risk_cents"] for s in scores if s["band"] in ("red", "yellow"))
