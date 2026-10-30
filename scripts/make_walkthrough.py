@@ -1,8 +1,8 @@
 """Build docs/walkthrough.mp4: a narrated walkthrough from the live screenshots.
 
-This is the Loom substitute. It is not a screen recording; it pairs the committed
-UI screenshots and two deck slides with macOS text-to-speech narration. The
-narration follows docs/walkthrough-script.md.
+This is a slideshow narration, not a screen recording. It pairs the committed
+UI screenshots and two deck slides with macOS text-to-speech. The narration is
+embedded below, so the build has no external script dependency.
 
 Requires macOS `say`, `ffmpeg`, and `ffprobe`:
 

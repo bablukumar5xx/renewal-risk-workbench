@@ -162,4 +162,4 @@ prose is commodity.
   there is no bounce/complaint webhook or provider-side unsubscribe handling.
 - **No live screen recording.** The committed walkthrough MP4 is a narrated
   slideshow assembled from the live screenshots, the deck, and macOS
-  text-to-speech; the script remains the source for a one-take recording.
+  text-to-speech.

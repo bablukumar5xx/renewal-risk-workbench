@@ -319,8 +319,8 @@ The full list, with rejected alternatives, is in
 - No ESP webhooks, bounce/complaint processing, or SMS. SMTP transport is
   available but not configured in the demo; no CRM write-back and no SSO.
 - No live screen recording. The [narrated walkthrough](docs/walkthrough.mp4) is
-  a 4-minute slideshow assembled from the live screenshots, deck, and script;
-  the script remains the source for a one-take recording.
+  a 4-minute slideshow assembled from the live screenshots, deck, and
+  text-to-speech narration.
 
 ## What breaks first at 10×
 
@@ -390,14 +390,13 @@ scripts/
   bootstrap.py  build world end to end
   nightly.py    unattended run (cron)
   make_deck.py  generate the solution-brief PPTX
-  make_walkthrough.py  narrated MP4 from screenshots + script
+  make_walkthrough.py  narrated MP4 from screenshots
 tests/
 docs/
   01-solution-brief.md
   model-card.md
   data-dictionary.md
   decisions.md
-  walkthrough-script.md
   walkthrough.mp4
   solution-brief.pptx
 ```
@@ -423,7 +422,6 @@ docs/
   mapping, identity rule, and time semantic.
 - [Decisions](docs/decisions.md) — 11 decisions, rejected alternatives, and
   deliberate skips.
-- [Walkthrough script](docs/walkthrough-script.md) — 5–7 minute recording script.
 - [Narrated walkthrough](docs/walkthrough.mp4) — 4-minute MP4 built from the
   screenshots and deck; regenerate with `scripts/make_walkthrough.py`.
 - [Solution brief deck](docs/solution-brief.pptx) — generated from live metrics.
