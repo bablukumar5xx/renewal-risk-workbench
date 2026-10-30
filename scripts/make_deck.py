@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import json
 import sqlite3
+from datetime import datetime
 from pathlib import Path
 
 from pptx import Presentation
@@ -154,6 +155,18 @@ def build() -> Path:
     risk_arr = m.get("_risk_arr", 0)
 
     prs = Presentation()
+    # Do not ship python-pptx's template author or 2013 template dates.
+    cp = prs.core_properties
+    cp.author = "Renewal Risk Workbench"
+    cp.last_modified_by = ""
+    cp.title = "Renewal Risk Workbench — Solution Brief"
+    cp.subject = "Customer Success renewal-risk system"
+    cp.comments = "Generated from the demo database by scripts/make_deck.py."
+    cp.keywords = "renewal risk, churn, customer success"
+    cp.category = "Solution brief"
+    cp.created = datetime.now()
+    cp.modified = datetime.now()
+    cp.revision = 1
     prs.slide_width = Inches(13.333)
     prs.slide_height = Inches(7.5)
     blank = prs.slide_layouts[6]

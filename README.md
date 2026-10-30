@@ -22,7 +22,7 @@ the operator's view.
 Requirements: Python 3.9+, ~1.5 GB free disk (the demo DB is ~0.5 GB).
 
 ```bash
-cd /Users/bablu/Documents/customer-health-platform
+cd customer-health-platform   # or the directory you unpacked
 python3.9 -m venv .venv
 .venv/bin/pip install -r requirements.txt
 

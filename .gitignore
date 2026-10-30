@@ -9,3 +9,6 @@ artifacts/
 
 # OS noise
 .DS_Store
+
+# Submission archives
+dist/
