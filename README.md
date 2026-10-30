@@ -30,9 +30,9 @@ python3.9 -m venv .venv
 # Takes about 4 minutes. Use --fresh to rebuild from scratch.
 .venv/bin/python scripts/bootstrap.py --fresh
 
-# Start the API + console (scheduler starts inside the process).
-# For a frozen demo, disable the scheduler so the displayed run stays at the
-# intended as-of; use scripts/nightly.py --as-of … to advance the world.
+# Start the API + console. The scheduler is on by default; for the frozen
+# demo we pin it off so the displayed run stays at the intended as-of.
+# Advance the world with scripts/nightly.py --as-of … instead.
 CHP_SCHEDULER=0 .venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
 
@@ -57,8 +57,8 @@ to a tenant; the plaintext key is never stored in the database.
 | ![Pipeline and data quality](docs/screenshots/pipeline.jpg) | ![Run detail with recorded steps](docs/screenshots/run-detail.jpg) |
 
 Also: [workspace picker](docs/screenshots/login.jpg) and
-[run list](docs/screenshots/runs.jpg). Captured from the running demo at
-1440×900-equivalent viewport (2× pixel density).
+[run list](docs/screenshots/runs.jpg). Captured from the running demo at 2×
+pixel density.
 
 ### Useful commands
 
