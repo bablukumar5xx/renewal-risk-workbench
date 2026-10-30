@@ -20,6 +20,7 @@ from datetime import datetime, timedelta, timezone
 
 from ..config import iso
 from ..db import insert_many, j, one, rows, scalar, tx, unj
+from ..delivery import send_email
 from ..ingest.canonicalize import canonicalize
 from ..model.scoring import score_tenant
 from . import policies
@@ -271,15 +272,16 @@ def _deliver(conn, tenant_id: str, action_id: str, contact: dict, subject: str, 
              decision: dict, actor: str) -> str:
     now_s = iso(datetime.now(timezone.utc))
     outbox_id = _id("out", action_id, now_s)
-    provider_id = "sim_" + hashlib.md5((action_id + now_s).encode()).hexdigest()[:16]
+    delivery = send_email(contact["email"], subject, body, action_id=action_id, now_s=now_s)
+    provider_id = delivery.message_id
     conn.execute("""INSERT INTO outbox (id, tenant_id, action_id, account_id, to_email, subject, body, status,
                     provider, provider_message_id, sent_at, meta_json, created_at)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, 'sent', 'simulated', ?, ?, ?, ?)""",
+                    VALUES (?, ?, ?, ?, ?, ?, ?, 'sent', ?, ?, ?, ?, ?)""",
                  (outbox_id, tenant_id, action_id,
                   scalar(conn, "SELECT account_id FROM actions WHERE id=?", (action_id,)),
-                  contact["email"], subject, body, provider_id, now_s,
+                  contact["email"], subject, body, delivery.provider, provider_id, now_s,
                   j({"policy_trace": decision["trace"], "contact_id": contact["contact_id"],
-                     "consent_source": contact.get("consent_source")}), now_s))
+                     "consent_source": contact.get("consent_source"), "transport": delivery.provider}), now_s))
     conn.execute("UPDATE actions SET status='sent', sent_at=?, updated_at=?, decided_by=?, decided_at=? WHERE id=?",
                  (now_s, now_s, actor, now_s, action_id))
     conn.execute("""INSERT INTO action_events (id, tenant_id, action_id, at, actor, event, detail_json)
@@ -333,12 +335,20 @@ def approve_action(conn, tenant_id: str, action_id: str, actor: str) -> dict:
                     VALUES (?, ?, ?, ?, ?, 'approved', ?)""",
                  (_id("aev", action_id, "approved", actor), tenant_id, action_id,
                   iso(datetime.now(timezone.utc)), actor, j({"channel": a["channel"]})))
-    _deliver(conn, tenant_id, action_id, contact, a["draft_subject"], a["draft_body"], decision, actor=actor)
-    conn.execute("""INSERT INTO audit_log (id, tenant_id, at, actor, action, object_type, object_id, detail_json)
-                    VALUES (?, ?, ?, ?, 'email_approved', 'action', ?, ?)""",
-                 (_id("aud", action_id, "approved"), tenant_id, iso(datetime.now(timezone.utc)), actor,
-                  action_id, j({"decision": decision})))
-    conn.commit()
+    try:
+        _deliver(conn, tenant_id, action_id, contact, a["draft_subject"], a["draft_body"],
+                 decision, actor=actor)
+        conn.execute("""INSERT INTO audit_log (id, tenant_id, at, actor, action, object_type, object_id, detail_json)
+                        VALUES (?, ?, ?, ?, 'email_approved', 'action', ?, ?)""",
+                     (_id("aud", action_id, "approved"), tenant_id, iso(datetime.now(timezone.utc)), actor,
+                      action_id, j({"decision": decision})))
+        conn.commit()
+    except Exception:
+        # The outbox row is written only after the transport accepts the message.
+        # Roll back the approval event too, so a failed send leaves the action
+        # proposed and never produces a phantom "approved" row.
+        conn.rollback()
+        raise
     return {"status": "sent"}
 
 

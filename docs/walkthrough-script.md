@@ -1,8 +1,12 @@
-# Loom walkthrough script (5–7 minutes)
+# Walkthrough script (5–7 minutes)
 
-This is the recording substitute: the environment cannot capture video. Record
-in one take at 1440×900 or larger, with the app running at
-`http://127.0.0.1:8000`. Speak the **Say** lines; do the **Do** lines.
+A generated 4-minute narration is committed at
+[`walkthrough.mp4`](walkthrough.mp4); rebuild it with
+`scripts/make_walkthrough.py`. The script below is the source for that
+narration and for a human one-take recording. The environment cannot capture a
+live desktop, so a manual recording is optional: use 1440×900 or larger, with
+the app running at `http://127.0.0.1:8000`, and do the **Do** lines while
+speaking the **Say** lines.
 
 Before recording:
 
@@ -139,8 +143,9 @@ show the slide.
 
 **Say:**
 > Deliberate skips: no causal uplift model, no expansion scoring, no meeting
-> notes, no real email provider, no automated retraining. The value estimate is
-> a stated assumption, not a measured lift.
+> notes, no automated retraining. Sends default to a simulated provider; the
+> SMTP path exists but is not configured here. The value estimate is a stated
+> assumption, not a measured lift.
 >
 > At ten times the data, SQLite full recompute breaks first, then per-account
 > occlusion explanations. The fix is incremental feature aggregates, a columnar

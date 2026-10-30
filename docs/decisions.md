@@ -157,7 +157,10 @@ prose is commodity.
   deterministic lexicon.** These are high-cost, low-trust inputs for v1.
 - **No per-tenant model retraining UI or drift monitor.** Retraining is a CLI
   operation; drift is reported, not automated.
-- **No real email provider.** Sends go to a simulated outbox with provider
-  message IDs, so the demo has no side effects.
-- **No Loom recording.** The environment cannot capture video; the walkthrough
-  script is the substitute and is written to be recorded in one take.
+- **No ESP integration beyond SMTP.** Sends default to a side-effect-free
+  simulated outbox; `CHP_EMAIL_TRANSPORT=smtp` delivers through a relay, but
+  there is no bounce/complaint webhook or provider-side unsubscribe handling.
+- **No live desktop capture.** The environment cannot record a screen. The
+  committed walkthrough MP4 is assembled from the live screenshots, the deck,
+  and macOS text-to-speech; the script remains the source for a human one-take
+  recording.

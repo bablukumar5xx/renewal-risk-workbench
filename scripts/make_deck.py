@@ -62,7 +62,7 @@ def _bg(slide, color=PAPER):
 
 
 def _text(slide, x, y, w, h, text, size=18, color=INK, bold=False, align=PP_ALIGN.LEFT,
-          font="Avenir Next", spacing=1.0):
+          font="Arial", spacing=1.0):
     box = slide.shapes.add_textbox(Inches(x), Inches(y), Inches(w), Inches(h))
     tf = box.text_frame
     tf.word_wrap = True
@@ -90,16 +90,20 @@ def _bullets(slide, x, y, w, h, items, size=17, color=INK, bullet_color=TEAL, ga
         p = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
         p.space_after = Pt(gap)
         p.line_spacing = 1.12
+        # Hanging indent so wrapped lines align under the text, not the dot.
+        pPr = p._p.get_or_add_pPr()
+        pPr.set("marL", str(int(Inches(0.24))))
+        pPr.set("indent", str(-int(Inches(0.24))))
         dot = p.add_run()
         dot.text = "●  "
         dot.font.size = Pt(size * 0.62)
         dot.font.color.rgb = bullet_color
-        dot.font.name = "Avenir Next"
+        dot.font.name = "Arial"
         run = p.add_run()
         run.text = item
         run.font.size = Pt(size)
         run.font.color.rgb = color
-        run.font.name = "Avenir Next"
+        run.font.name = "Arial"
     return box
 
 
@@ -107,8 +111,9 @@ def _kicker(slide, text, color=TEAL):
     _text(slide, 0.8, 0.55, 11.5, 0.35, text.upper(), size=11, color=color, bold=True)
 
 
-def _title(slide, text, size=34, y=0.95):
-    _text(slide, 0.8, y, 11.8, 1.0, text, size=size, bold=True, color=INK)
+def _title(slide, text, size=31, y=0.95):
+    # Two lines of 31pt fit inside 1.05in; the rule sits below this box.
+    _text(slide, 0.8, y, 11.8, 1.05, text, size=size, bold=True, color=INK, spacing=1.0)
 
 
 def _rule(slide, y):
@@ -177,7 +182,7 @@ def build() -> Path:
     _bg(s)
     _kicker(s, "The problem")
     _title(s, "The request assumes detection is the hard part. It isn't.")
-    _rule(s, 2.0)
+    _rule(s, 2.1)
     _bullets(s, 0.8, 2.35, 5.7, 3.9, [
         "Five systems already emit the signals. Nobody can triangulate them by hand across 120 accounts.",
         "A red/yellow/green column adds a sixth thing to read on Monday; it does not create a reason to open the account.",
@@ -201,7 +206,7 @@ def build() -> Path:
     _bg(s)
     _kicker(s, "What I would build first")
     _title(s, "Four parts. Trust the first one before automating the last.")
-    _rule(s, 2.0)
+    _rule(s, 2.1)
     items = [
         ("01", "A fitted model", "Calibrated P(churn at next renewal) from point-in-time features. Gradient-boosted trees, temporal validation, isotonic calibration. Not an LLM judgement."),
         ("02", "A ranked queue", "P × ARR, bounded by CSM capacity. Top reasons, the raw records behind them, a coverage badge, and a recommended play."),
@@ -227,8 +232,8 @@ def build() -> Path:
     s = prs.slides.add_slide(blank)
     _bg(s)
     _kicker(s, "Where I disagree", ORANGE)
-    _title(s, "Automate the internal work. Gate the customer conversation.")
-    _rule(s, 2.0)
+    _title(s, "Automate the internal work. Gate the conversation.")
+    _rule(s, 2.1)
     _text(s, 0.8, 2.3, 5.7, 0.4, "AUTOMATE", size=11.5, color=TEAL, bold=True)
     _bullets(s, 0.8, 2.7, 5.6, 3.2, [
         "Ingest, resolve, deduplicate, and hold back late data.",
@@ -254,7 +259,7 @@ def build() -> Path:
     _bg(s)
     _kicker(s, "How it works")
     _title(s, "Messy sources in. A defensible queue out.")
-    _rule(s, 2.0)
+    _rule(s, 2.1)
     stages = [
         ("5 SOURCES", "Salesforce\nStripe\nZendesk\nGmail\nProduct"),
         ("RAW", "Immutable\narrival time\nnatural keys"),
@@ -299,7 +304,7 @@ def build() -> Path:
     _bg(s)
     _kicker(s, "Evidence")
     _title(s, "The model is fitted and calibrated, not prompted.")
-    _rule(s, 2.0)
+    _rule(s, 2.1)
     cards = [
         ("ROC-AUC", f"{m.get('auc', 0):.3f}", "all horizons, held-out renewals"),
         ("AUC @ 90 days", f"{at90.get('auc', 0):.3f}", "operational horizon"),
@@ -328,7 +333,7 @@ def build() -> Path:
     _bg(s)
     _kicker(s, "Guardrails")
     _title(s, "Policy is code, and every rule is logged.")
-    _rule(s, 2.0)
+    _rule(s, 2.1)
     cols = [
         ("HARD BLOCK", RED, ["Tenant kill switch", "Missing email consent / opt-out", "Source coverage below tenant minimum"]),
         ("FORCES APPROVAL", ORANGE, ["ARR above auto-send ceiling", "Cooldown or daily/monthly cap", "Open P1 incident", "Any non-transactional play"]),
@@ -338,8 +343,8 @@ def build() -> Path:
         x = 0.8 + i * 4.0
         _text(s, x, 2.35, 3.6, 0.35, head, size=11, color=color, bold=True)
         _bullets(s, x, 2.8, 3.6, 2.8, items, size=13.5, bullet_color=color, gap=6)
-    _rule(s, 5.65)
-    _text(s, 0.8, 5.9, 11.8, 1.2,
+    _rule(s, 4.55)
+    _text(s, 0.8, 4.8, 11.8, 1.2,
           "One action per account per play per ISO week, and one open action per account per cooldown. "
           "Re-running the same window is a no-op. Approval writes an action event, an outbox row with a provider ID, "
           "and an audit record in one transaction — so “sent” always has a row behind it.",

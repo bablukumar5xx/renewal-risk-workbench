@@ -13,6 +13,7 @@ from ..agent.runner import approve_action, build_digest, run_agent
 from ..auth import Principal, current_principal
 from ..config import AS_OF, TENANT_CONFIG, iso
 from ..db import get_conn, one, rows, scalar, unj
+from ..delivery import DeliveryError
 from ..features.builder import _evidence_item, recent_signals
 from ..features.registry import FEATURE_META, FEATURES
 
@@ -290,6 +291,9 @@ def decide_approve(action_id: str, body: DecideBody, p: Principal = Depends(curr
     conn = get_conn()
     try:
         r = approve_action(conn, p.tenant_id, action_id, actor="csm@tenant")
+    except DeliveryError as e:
+        # The action stays proposed; nothing was written to the outbox.
+        raise HTTPException(status_code=502, detail=str(e))
     except ValueError as e:
         raise HTTPException(status_code=409, detail=str(e))
     return r

@@ -118,9 +118,12 @@ duplicate outreach for the same play in the same week.
 
 ### `action_events`, `outbox`, `audit_log`
 `action_events` is the append-only action history (`created`, `approved`,
-`rejected`, `sent`, `retriggered`). `outbox` is the simulated provider: one row
-per send, with `provider_message_id`, consent source, and policy trace.
-`audit_log` records security-relevant events (`email_sent`, `email_approved`).
+`rejected`, `sent`, `retriggered`). `outbox` is the delivery record: one row
+per send, with `provider` (`simulated` or `smtp`), the provider
+`message_id`, consent source, and policy trace. The default transport is
+simulated; set `CHP_EMAIL_TRANSPORT=smtp` and the `CHP_SMTP_*` variables to
+deliver through a relay. `audit_log` records security-relevant events
+(`email_sent`, `email_approved`).
 
 ## Identity resolution
 
