@@ -9,7 +9,7 @@ Before recording:
 ```bash
 cd /Users/bablu/Documents/customer-health-platform
 .venv/bin/python scripts/bootstrap.py --fresh   # only if data/artifacts are absent
-.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000
+CHP_SCHEDULER=0 .venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
 
 Open two tabs: the app, and `/docs` (FastAPI's API reference). Zoom the browser

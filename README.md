@@ -31,7 +31,9 @@ python3.9 -m venv .venv
 .venv/bin/python scripts/bootstrap.py --fresh
 
 # Start the API + console (scheduler starts inside the process).
-.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000
+# For a frozen demo, disable the scheduler so the displayed run stays at the
+# intended as-of; use scripts/nightly.py --as-of … to advance the world.
+CHP_SCHEDULER=0 .venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
 
 Open <http://127.0.0.1:8000>. API docs: <http://127.0.0.1:8000/docs>.
